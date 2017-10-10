@@ -5,8 +5,6 @@
 
 namespace App\Model;
 
-use Psr\Container\ContainerInterface;
-
 class CategoryModel extends BaseModel
 {
     /**
@@ -41,7 +39,7 @@ class CategoryModel extends BaseModel
      * @param integer $catId идентификатор радительской категории
      * @return array массив дочерних категорий
      */
-    public function getChildrenForCat($catId)
+    public function getChildrenForCat(int $catId)
     {
         /**
          * @var \PDO $pdo
@@ -53,5 +51,29 @@ class CategoryModel extends BaseModel
         $rs = $pdo->query($sql);
 
         return $this->createSmartyRsArray($rs);
+    }
+
+    /**
+     * Получить категорию по ее id
+     *
+     * @param integer $id идентификатор категории
+     * @return array массив - строка категории
+     */
+    public function getCatById(int $id)
+    {
+        /**
+         * @var \PDO $pdo
+         */
+        $pdo = $this->container["db"];
+
+        $sql = "SELECT * FROM categories WHERE id = '" . $id . "'";
+
+        $rs = $pdo->query($sql);
+        $data = $rs->fetch(\PDO::FETCH_ASSOC);
+
+        $pdo = null;
+        $rs = null;
+
+        return $data;
     }
 }

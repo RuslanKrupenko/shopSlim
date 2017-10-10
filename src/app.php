@@ -1,7 +1,9 @@
 <?php
 
-use Psr\Http\Message\ServerRequestInterface as Request;
-use Psr\Http\Message\ResponseInterface as Response;
+session_start(); //стартуем сессию
+if (!isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = array();
+}
 
 require_once "../vendor/autoload.php";
 

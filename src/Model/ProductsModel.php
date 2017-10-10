@@ -13,7 +13,7 @@ class ProductsModel extends BaseModel
      * @param null $limit
      * @return array
      */
-    function getLastProducts($limit = null)
+    public function getLastProducts($limit = null)
     {
         /**
          * @var \PDO $pdo
@@ -27,6 +27,57 @@ class ProductsModel extends BaseModel
         }
 
         $rs = $pdo->query($sql);
-        return $this->createSmartyRsArray($rs);
+        $data = $this->createSmartyRsArray($rs);
+
+        $pdo = null;
+        $rs = null;
+
+        return $data;
+    }
+
+    /**
+     * Получить данные продукта по ID
+     *
+     * @param integer $itemId идентификатор товара
+     * @return array массив - строка товара из базы
+     */
+    public function getProductById(int $itemId)
+    {
+        /**
+         * @var \PDO $pdo
+         */
+        $pdo = $this->container["db"];
+        $sql = "SELECT * FROM products WHERE id = " . $itemId;
+
+        $rs = $pdo->query($sql);
+        $data = $rs->fetch(\PDO::FETCH_ASSOC);
+
+        $pdo = null;
+        $rs = null;
+
+        return $data;
+    }
+
+    /**
+     * Получаем все продукты выбранной категории
+     *
+     * @param integer $carId идентификатор категории
+     * @return array массив - набор продуктов
+     */
+    function getProductsByCat(int $catId)
+    {
+        /**
+         * @var \PDO $pdo
+         */
+        $pdo = $this->container["db"];
+        $sql = "SELECT * FROM products WHERE category_id = " . $catId;
+
+        $rs = $pdo->query($sql);
+        $data = $this->createSmartyRsArray($rs);
+
+        $pdo = null;
+        $rs = null;
+
+        return $data;
     }
 }

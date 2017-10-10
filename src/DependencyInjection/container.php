@@ -10,3 +10,18 @@ $container["db"] = function ($c) {
 
     return $pdo;
 };
+
+$container["smarty"] = function ($c) {
+    $smartySettings = $c["settings"]["smarty"];
+    $smarty = new Smarty();
+
+    //< иницивлизация шаблонизатора Smarty
+    $smarty->setTemplateDir($smartySettings["tpl_prefix"]);
+    $smarty->setCompileDir(__DIR__ . "/../tmp/smarty/templates_c");
+    $smarty->setCacheDir(__DIR__ . "/../tmp/smarty/cache");
+//    $smarty->setConfigDir(__DIR__ . "/../../vendor/smarty/smarty/demo/configs");
+
+    $smarty->assign("templateWebPath", $smartySettings["tpl_web_path"]);
+    // >
+    return $smarty;
+};
