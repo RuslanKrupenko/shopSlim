@@ -25,3 +25,9 @@ $container["smarty"] = function ($c) {
     // >
     return $smarty;
 };
+
+$container["logger"] = function ($c) {
+    $logger = new Monolog\Logger("app");
+    $logger->pushHandler(new \Monolog\Handler\StreamHandler(__DIR__ . "/../../logs/app.log"));
+    return $logger;
+};

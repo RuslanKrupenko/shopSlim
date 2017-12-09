@@ -8,7 +8,7 @@ function addToCart(itemId) {
     $.ajax({
         type: "POST",
         async: false,
-        url: "/?controller=cart&action=addtocart&id=" + itemId,
+        url: "/cart/add/" + itemId,
         dataType: "json",
         success: function (data) {
             if (data['success']) {
@@ -26,7 +26,7 @@ function removeFromCart(itemId) {
     $.ajax({
         type: "POST",
         async: false,
-        url: "/?controller=cart&action=removefromcart&id=" + itemId,
+        url: "/cart/remove/" + itemId,
         dataType: "json",
         success: function (data) {
             if (data['success']) {

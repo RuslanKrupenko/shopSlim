@@ -17,3 +17,23 @@ $app->get("/category/{id}", function (Request $request, Response $response, $arg
     $controller = new \App\Controller\CategoryController($app->getContainer());
     $controller->indexAction($args);
 });
+
+$app->get("/cart", function () use ($app) {
+    $controller = new \App\Controller\CartController($app->getContainer());
+    $controller->indexAction();
+});
+
+$app->post("/cart/add/{id}", function (Request $request, Response $response, $args) use ($app) {
+    $controller = new \App\Controller\CartController($app->getContainer());
+    $controller->addtocartAction($args);
+});
+
+$app->post("/cart/remove/{id}", function (Request $request, Response $response, $args) use ($app) {
+    $controller = new \App\Controller\CartController($app->getContainer());
+    $controller->removefromcartAction($args);
+});
+
+$app->post("/cart/order", function (Request $request, Response $response, $args) use ($app) {
+    $controller = new \App\Controller\CartController($app->getContainer());
+    $controller->orderAction($request);
+});

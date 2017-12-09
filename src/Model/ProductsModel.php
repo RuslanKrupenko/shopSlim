@@ -5,6 +5,8 @@
 
 namespace App\Model;
 
+use Monolog\Logger;
+
 class ProductsModel extends BaseModel
 {
     /**
@@ -74,6 +76,43 @@ class ProductsModel extends BaseModel
 
         $rs = $pdo->query($sql);
         $data = $this->createSmartyRsArray($rs);
+
+        $pdo = null;
+        $rs = null;
+
+        return $data;
+    }
+
+    /**
+     * Метод возращает массив товаров из массива идентификаторов
+     *
+     * @param array $itemIds массив идентификаторов товаров
+     * @return array массив товаров
+     */
+    public function getProductsFromArray($itemIds)
+    {
+        if (!$itemIds) {
+            return null;
+        }
+        /**
+         * @var Logger $logger
+         */
+        $logger = $this->container["logger"];
+        /**
+         * @var \PDO $pdo
+         */
+        $pdo = $this->container["db"];
+        $strIds = implode(",", $itemIds);
+        $sql = "SELECT * FROM products WHERE id in ({$strIds})";
+
+        try {
+            $rs = $pdo->query($sql);
+            $data = $this->createSmartyRsArray($rs);
+        } catch (\Exception $e) {
+            $logger->error("Ошибка: " . $e->getMessage());
+            $logger->info("Query was: " . $sql);
+            return null;
+        }
 
         $pdo = null;
         $rs = null;
