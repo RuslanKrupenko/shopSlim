@@ -74,7 +74,7 @@ function registerNewUser() {
     $.ajax({
         type: "POST",
         async: false,
-        url: "/?controller=user&action=register",
+        url: "/user/register",
         data: postData,
         dataType: "json",
         success: function (data) {
@@ -82,7 +82,7 @@ function registerNewUser() {
                 alert("Регистрация прошла успешно!");
 
                 $("#registerBox").hide();
-                $("#userLink").attr("href", "/?controller=user");
+                $("#userLink").attr("href", "/user");
                 $("#userLink").html(data['userName']);
                 $("#userBox").show();
 
@@ -106,7 +106,7 @@ function login() {
 
     $.ajax({
         type: "POST",
-        url: "/?controller=user&action=login",
+        url: "/user/login",
         async: false,
         data: postData,
         dataType: "json",
@@ -115,7 +115,7 @@ function login() {
                 $("#registerBox").hide();
                 $("#loginBox").hide();
 
-                $("#userLink").attr("href", "/?controller=user");
+                $("#userLink").attr("href", "/user");
                 $("#userLink").html(data['displayName']);
                 $("#userBox").show();
 

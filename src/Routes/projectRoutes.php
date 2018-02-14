@@ -37,3 +37,8 @@ $app->post("/cart/order", function (Request $request, Response $response, $args)
     $controller = new \App\Controller\CartController($app->getContainer());
     $controller->orderAction($request);
 });
+
+$app->post("/user/register", function (Request $request, Response $response, $args) use ($app) {
+    $controller = new \App\Controller\UserController($app->getContainer());
+    $controller->registerAction($request);
+});
